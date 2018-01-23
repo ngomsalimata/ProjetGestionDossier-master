@@ -1,0 +1,55 @@
+    {% extends 'base.html.twig' %}
+
+    {% block  breadcrumb %}
+    <li>
+        <a href='{{ path('userentite_index') }}'>Revenir à la liste</a>
+    </li>
+    <li class="active">Modification de UserEntite</li>
+        {% endblock %}
+
+    {% block  page_header %}
+    Formulaire
+    <small>
+        <i class="ace-icon fa fa-angle-double-right"></i>
+        Modification de UserEntite
+    </small>
+    {% endblock %}
+
+    {% block body %}
+    <div class="row">
+        <div class="col-xs-12">
+
+            {{ form_start(edit_form,{'attr':{'class':'form-horizontal','role':'form'}}) }}                                        <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button class="btn btn-warning tooltip-warning" data-rel="tooltip" data-placement="top"   title="modifier UserEntite">
+                            <i class="ace-icon fa fa-edit bigger-110"></i>
+                            modifier
+                        </button>
+
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn" type="reset" data-rel="tooltip" data-placement="top"   title="vider le formulaire de UserEntite">
+                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                            vider le formulaire
+                        </button>
+                    </div>
+                </div>
+
+                {{ form_end(edit_form) }}
+
+            </div><!-- /.col -->
+        </div><!-- /.row -->           
+
+
+                <div class="clearfix form-actions">
+    <div class="col-md-offset-3 col-md-9">
+        <div class="pull-left col-sm-3">
+            {{ form_start(delete_form) }}
+            <button class="btn btn-danger tooltip-error" data-rel="tooltip" data-placement="top"  title="Supprimer userentite">
+                <i class="ace-icon fa fa-trash bigger-110"></i>
+                Supprimer
+            </button>
+            {{ form_end(delete_form) }}
+        </div>
+    </div>
+</div>{% endblock %}
+        

@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block  breadcrumb %}
+    <li class="active">Liste des Entites</li>
+    {% endblock %}
+
+{% block  page_header %}
+    Index
+    <small>
+        <i class="ace-icon fa fa-angle-double-right"></i>
+        Liste des Entites
+    </small>
+{% endblock %}
+
+
+
+{% block body %}
+
+    <div class="clearfix">
+        <div class="pull-right tableTools-container"></div>
+    </div>
+    <div class="table-header text-center">
+        Liste des Entites
+    </div>
+
+    <form method="POST" action="{{ path('entite_deleteSelection') }}">
+
+        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="center">
+                        <label class="pos-rel">
+                            <input type="checkbox" class="ace ace-switch ace-switch-4"/>
+                            <span class="lbl"></span>
+                        </label>
+                    </th>
+
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Sigle</th>
+                    <th>Adresse</th>
+                    <th>Numerotelephone1</th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entite in entites %}
+                    <tr>
+                        <td class="center">
+                            <label class="pos-rel">
+                                <input type="checkbox" name="selection[{{entite.id}}]" class="ace ace-switch ace-switch-4" />
+                                <span class="lbl"></span>
+                            </label>
+                        </td>
+
+                        <td><a href="{{ path('entite_show', { 'id': entite.id }) }}">{{ entite.id }}</a></td>
+
+                        <td>{{ entite.nom }}</td>
+
+                        <td>{{ entite.sigle }}</td>
+
+                        <td>{{ entite.adresse }}</td>
+
+                        <td>{{ entite.numeroTelephone1 }}</td>
+
+                        <td>
+                            <div class="hidden-sm hidden-xs action-buttons">                            
+                                {% if is_granted('ROLE_ENTITE_V') %}
+                                    <a class="blue" href="{{ path('entite_show', { 'id': entite.id }) }}">
+                                        <i class="ace-icon fa fa-search-plus bigger-130"></i>
+                                    </a>
+                                {% endif %}
+                            </div>
+                            <div class="hidden-md hidden-lg">
+                                <div class="inline pos-rel">
+                                    <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                        <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">                  
+                                        {% if is_granted('ROLE_ENTITE_V') %}
+                                            <li>
+                                                <a href="{{ path('entite_show', { 'id': entite.id }) }}" class="tooltip-info" data-rel="tooltip"  title="Voir entite">
+                                                    <span class="blue">
+                                                        <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                    </span>   
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+        <div class="clearfix form-actions">
+            <div class="col-md-offset-3 col-md-9">
+                <a class="btn btn-info tooltip-info" data-rel="tooltip" data-placement="top"  type="button" href="{{ path('entite_new') }}"  title="Ajouter entite">
+                    <i class="ace-icon fa fa-plus bigger-110"></i> 
+                    Ajouter
+                </a>                    <button class="btn btn-danger tooltip-error" data-rel="tooltip" data-placement="top"   title="Supprimer la selection de entite"><i class="fa fa-trash"></i> Supprimer selection</button>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

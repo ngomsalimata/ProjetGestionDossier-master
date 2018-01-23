@@ -1,0 +1,97 @@
+
+{% block body %}
+    <div class="row">
+        <div class="col-xs-12">
+
+            {{ form_start(form,{'attr':{'class':'form-horizontal','role':'form','action':path('entite_new')}}) }}     
+            <input type="number" name="source" value="1" hidden="">
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(form.nom) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(form.nom,{'attr':{'id':'form-field'}}) }}
+                    </span>
+                </div>
+            </div>                        
+
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(form.sigle) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(form.sigle,{'attr':{'id':'form-field'}}) }}
+                    </span>
+                </div>
+            </div>                        
+
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(form.adresse) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(form.adresse,{'attr':{'id':'form-field'}}) }}
+                    </span>
+                </div>
+            </div>                        
+
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(form.numeroTelephone1) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(form.numeroTelephone1,{'attr':{'id':'form-field'}}) }}
+                    </span>
+                </div>
+            </div>                        
+
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(form.numeroTelephone2) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(form.numeroTelephone2,{'attr':{'id':'form-field'}}) }}
+                    </span>
+                </div>
+            </div>                        
+
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(form.email) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(form.email,{'attr':{'id':'form-field'}}) }}
+                    </span>
+                </div>
+            </div>                        
+
+            <div class="form-group hidden">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(form.entite) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(form.entite,{'attr':{'class':'select2'}}) }}
+                    </span>
+                </div>
+            </div>                        
+
+
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                    <button class="btn btn-info tooltip-info" data-rel="tooltip" data-placement="top"   title="enregistrer Entite">
+                        <i class="ace-icon fa fa-check bigger-110"></i>
+                        enregistrer
+                    </button>
+
+                    &nbsp; &nbsp; &nbsp;
+                    <button class="btn" data-rel="tooltip" data-placement="top"  type="reset"  title="Vider le formulaire de Entite" >
+                        <i class="ace-icon fa fa-undo bigger-110"></i>
+                        vider le formulaire
+                    </button>
+                </div>
+            </div>
+
+            {{ form_end(form) }}
+
+        </div><!-- /.col -->
+    </div><!-- /.row -->           
+
+{% endblock %}

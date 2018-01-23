@@ -1,0 +1,168 @@
+{% block extends %}
+    {{ "{% extends 'base.html.twig' %}" }}
+{% endblock extends %}
+
+{% block body %}
+    {{ "{% block  breadcrumb %}" }}
+    <li class="active">Liste des {{ entity }}s</li>
+        {{ "{% endblock %}" }}
+
+    {{ "{% block  page_header %}" }}
+    Index
+    <small>
+        <i class="ace-icon fa fa-angle-double-right"></i>
+        Liste des {{entity}}s
+    </small>
+    {{ "{% endblock %}" }}
+
+
+
+    {{ "{% block body %}" }}
+
+    <div class="clearfix">
+        <div class="pull-right tableTools-container"></div>
+    </div>
+    <div class="table-header text-center">
+        Liste des {{ entity }}s
+    </div>
+
+    <form method="POST" action="{{ "{{ path('" ~ route_name_prefix ~ "_deleteSelection') }}" }}">
+
+        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="center">
+                        <label class="pos-rel">
+                            <input type="checkbox" class="ace ace-switch ace-switch-4"/>
+                            <span class="lbl"></span>
+                        </label>
+                    </th>
+
+                    {% set i=0 %}
+                    {%- for field, metadata in fields %}
+                    {% if i<5 %}
+                        <th>{{ field|capitalize }}</th>
+                            {% set i=i+1 %}
+                        {% endif %}
+
+                    {%- endfor %}
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{ '{% for ' ~ entity_singularized ~ ' in ' ~ entity_pluralized ~ ' %}' }}
+                <tr>
+                    <td class="center">
+                        <label class="pos-rel">
+                            <input type="checkbox" name="{{ "selection[{{"~entity_singularized ~ "."~ identifier~"}}]" }}" class="ace ace-switch ace-switch-4" />
+                            <span class="lbl"></span>
+                        </label>
+                    </td>
+                    {% set i=0 %}
+                    {%- for field, metadata in fields %}
+                    {% if i<5 %}
+                        {%- if loop.first and ('show' in actions) %}
+
+                        <td><a href="{{ "{{ path('" ~ route_name_prefix ~ "_show', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}">{{ '{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' }}' }}</a></td>
+
+                        {%- elseif metadata.type in ['datetime'] %}
+
+                        <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'d/m/Y H:i:s\') }}{% endif %}' }}</td>
+
+                        {%- elseif metadata.type in ['date'] %}
+
+                        <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'d/m/Y\') }}{% endif %}' }}</td>
+
+                        {%- elseif metadata.type in ['time'] %}
+
+                        <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'H:i:s\') }}{% endif %}' }}</td>
+
+                        {%- elseif metadata.type in ['array'] %}
+
+                        <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|join(\', \') }}{% endif %}' }}</td>
+
+                        {%- elseif metadata.type in ['boolean'] %}
+
+                        <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}Vrai{% else %}Faux{% endif %}' }}</td>
+
+                        {%- else %}
+
+                        <td>{{ '{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' }}' }}</td>
+
+                        {%- endif %}
+
+                        {% set i=i+1 %}
+                    {% endif %}
+
+                    {%- if loop.last %}
+
+                    <td>
+                        <div class="hidden-sm hidden-xs action-buttons">
+                            {%- for action in record_actions %}
+                            {% if action=='show' %}
+
+                                <a class="blue" href="{{ "{{ path('" ~ route_name_prefix ~ "_" ~ action ~ "', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}">
+                                    <i class="ace-icon fa fa-search-plus bigger-130"></i>
+                                </a>
+                            {% else %}
+                                <a class="green" href="{{ "{{ path('" ~ route_name_prefix ~ "_" ~ action ~ "', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}">
+                                    <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                </a>
+                            {% endif %}
+                            {%- endfor %}
+                        </div>
+                        <div class="hidden-md hidden-lg">
+                            <div class="inline pos-rel">
+                                <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                    <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                    {%- for action in record_actions %}
+                                    <li>
+                                        {% if action=='show' %}
+                                            <a href="{{ "{{ path('" ~ route_name_prefix ~ "_" ~ action ~ "', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}" class="tooltip-info" data-rel="tooltip"  title="{{ "Voir "~route_name_prefix}}">
+                                                <span class="blue">
+                                                    <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                </span>   
+                                            </a>
+                                        {% else %}
+                                            <a href="{{ "{{ path('" ~ route_name_prefix ~ "_" ~ action ~ "', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}" class="tooltip-success" data-rel="tooltip"  title="{{ "Modifier "~route_name_prefix}}">
+                                                <span class="green">
+                                                    <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                </span>
+                                            </a>
+                                        {% endif %}
+                                    </li>
+                                    {%- endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+
+                    {%- endif %}
+
+                    {%- endfor %}
+
+                </tr>
+                {{ '{% endfor %}' }}
+            </tbody>
+        </table>
+
+
+
+        <div class="clearfix form-actions">
+            <div class="col-md-offset-3 col-md-9">
+                {% if 'new' in actions -%}
+                    <a class="btn btn-info tooltip-info" data-rel="tooltip" data-placement="top"  type="button" href="{{ "{{ path('" ~ route_name_prefix ~ "_new') }}" }}"  title="{{ "Ajouter "~route_name_prefix}}">
+                        <i class="ace-icon fa fa-plus bigger-110"></i> 
+                        Ajouter
+                    </a>
+                    {%- endif %}
+                    <button class="btn btn-danger tooltip-error" data-rel="tooltip" data-placement="top"   title="{{ "Supprimer la selection de "~route_name_prefix}}"><i class="fa fa-trash"></i> Supprimer selection</button>
+                </div>
+            </div>
+        </form>
+
+        {{ "{% endblock %}" }}
+        {% endblock body %}

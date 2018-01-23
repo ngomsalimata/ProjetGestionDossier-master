@@ -1,0 +1,97 @@
+{% extends 'FOSMessageBundle::layout.html.twig' %}
+
+{% block fos_message_content %}
+
+    <form id="id-message-form"  action="{{ url('fos_message_thread_new') }}" method="POST" class="form-horizontal message-form col-xs-12">
+        <div id="id-message-new-navbar" class="message-navbar clearfix">
+            <div class="tab-content no-border no-padding">
+                <div class="message-bar">
+                    <div class="message-toolbar">
+                        <a  class="btn btn-xs btn-white btn-primary">
+                            <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                            <span class="bigger-110">Save Draft</span>
+                        </a>
+
+                        <a class="btn btn-xs btn-white btn-primary">
+                            <i class="ace-icon fa fa-times bigger-125 orange2"></i>
+                            <span class="bigger-110">Discard</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="messagebar-item-left">
+                        <a href="#" class="btn-back-message-list">
+                            <i class="ace-icon fa fa-arrow-left bigger-110 middle blue"></i>
+                            <b class="middle bigger-110">Back</b>
+                        </a>
+                    </div>
+
+                    <div class="messagebar-item-right">
+                        <span class="inline btn-send-message">
+                            <button class="btn btn-sm btn-primary no-border btn-white btn-round">
+                                <span class="bigger-110">Send</span>
+
+                                <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-field-recipient">Recipient:</label>
+
+            <div class="col-sm-9">
+                {{ form_errors(form.recipient) }}
+                <span class="input-icon">
+                    {{ form_widget(form.recipient,{'attr':{'id':'form-field-recipient','placeholder':'Recipient'}}) }}
+                    {#                        <input type="email" name="recipient" id="form-field-recipient" data-value="alex@doe.com" value="alex@doe.com" placeholder="Recipient(s)" />#}
+                    <i class="ace-icon fa fa-user"></i>
+                </span>
+            </div>
+        </div>
+        <div class="hr hr-18 dotted"></div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-field-subject">Subject:</label>
+
+            <div class="col-sm-6 col-xs-12">
+                {{ form_errors(form.subject) }}
+                <div class="input-icon block col-xs-12 no-padding">
+                    {{ form_widget(form.subject,{'attr':{'type':'text','id':'form-field-subject','placeholder':'Subject','class':'col-xs-12','maxlength':100}}) }}
+                    <i class="ace-icon fa fa-comment-o"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="hr hr-18 dotted"></div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">
+                <span class="inline space-24 hidden-480"></span>
+                Message:
+            </label>
+
+            {{ form_errors(form.body) }}
+            <div class="col-sm-9">
+                {{ form_widget(form.body,{'attr':{'placeholder':'Body'}}) }}
+
+            </div>
+        </div>
+
+        <div class="hr hr-18 dotted"></div>
+
+        <div class="messagebar-item-right">
+            <span class="inline btn-send-message">
+                <button class="btn btn-sm btn-primary no-border btn-white btn-round">
+                    <span class="bigger-110">Send</span>
+
+                    <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+                </button>
+            </span>
+        </div>
+
+    </form>
+
+{% endblock %}

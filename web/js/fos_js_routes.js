@@ -1,0 +1,1 @@
+fos.Router.setData({"base_url":"","routes":{"user_entite_statistique":{"tokens":[["text","\/statistique\/entiteuser"]],"defaults":[],"requirements":[],"hosttokens":[]}},"prefix":"","host":"localhost","scheme":"http"});

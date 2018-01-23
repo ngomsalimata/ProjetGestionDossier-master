@@ -1,0 +1,313 @@
+{% extends 'base.html.twig' %}
+
+{% block  breadcrumb %}
+    <li>
+        <a href='{{ path('entite_index') }}'>Revenir à la liste</a>
+    </li>
+    <li class="active">Affichage de Entite</li>
+    {% endblock %}
+
+
+{% block  page_header %}
+    Formulaire
+    <small>
+        <i class="ace-icon fa fa-angle-double-right"></i>
+        Affichage de Entite
+    </small>
+{% endblock %}
+
+{% block body %}
+
+    <div class="clearfix form-actions">
+        <div class="col-md-12 col-xs-12">
+            {% if is_granted('ROLE_ENTITE_M') %}
+                <a   href="#modal-edit_entite"  role="button" class="btn btn-primary" data-toggle="modal"  title="Modifier entite">
+                    <i class="ace-icon fa fa-edit bigger-110"></i> modifier
+                </a>
+            {% endif %}
+            {% if is_granted('ROLE_ENTITE_S') %}
+                <div class="pull-left col-sm-3">
+                    {{ form_start(delete_form) }}
+                    <button class="btn btn-danger tooltip-error" data-rel="tooltip" data-placement="top"  title="Supprimer entite">
+                        <i class="ace-icon fa fa-trash bigger-110"></i>
+                        Supprimer
+                    </button>
+                    {{ form_end(delete_form) }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-5 widget-container-col">
+        <div class="widget-box widget-color-blue">
+            <div class="widget-header">
+                <h5 class="widget-title bigger lighter text-center">
+                    <i class="ace-icon fa fa-table"></i>
+                    Informations sur Entite 
+                </h5>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main no-padding">
+                    <table class="table table-striped table-bordered table-hover bg-info">
+                        <tbody>
+                            <tr>
+                                <th>Id</th>
+                                <td>{{ entite.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nom</th>
+                                <td>{{ entite.nom }}</td>
+                            </tr>
+                            <tr>
+                                <th>Sigle</th>
+                                <td>{{ entite.sigle }}</td>
+                            </tr>
+                            <tr>
+                                <th>Adresse</th>
+                                <td>{{ entite.adresse }}</td>
+                            </tr>
+                            <tr>
+                                <th>Numerotelephone1</th>
+                                <td>{{ entite.numeroTelephone1 }}</td>
+                            </tr>
+                            <tr>
+                                <th>Numerotelephone2</th>
+                                <td>{{ entite.numeroTelephone2 }}</td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>{{ entite.email }}</td>
+                            </tr>                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.span -->
+    <div class="col-xs-12 col-md-7 widget-container-col">   
+        <div class="box box-header label label-info h1">Liste des sous-directions</div>
+        <form method="POST" action="{{ path('entite_deleteSelection') }}">
+
+            <table class="table table-striped table-bordered table-hover bg-info">
+                <thead>
+                    <tr>
+                        <th class="center"></th>
+                        <th>Id</th>
+                        <th>Nom</th>
+                        <th>Sigle</th>
+                        <th>Adresse</th>
+                        <th>Numerotelephone1</th>
+
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entite in sous_entites %}
+                        <tr>
+                            <td class="center">
+                                <label class="pos-rel">
+                                    <input type="checkbox" name="selection[{{entite.id}}]" class="ace ace-switch ace-switch-4" />
+                                    <span class="lbl"></span>
+                                </label>
+                            </td>
+
+                            <td><a href="{{ path('entite_show', { 'id': entite.id }) }}">{{ entite.id }}</a></td>
+
+                            <td>{{ entite.nom }}</td>
+
+                            <td>{{ entite.sigle }}</td>
+
+                            <td>{{ entite.adresse }}</td>
+
+                            <td>{{ entite.numeroTelephone1 }}</td>
+
+                            <td>
+                                <div class="hidden-sm hidden-xs action-buttons">                            
+                                    {% if is_granted('ROLE_ENTITE_V') %}
+                                        <a class="blue" href="{{ path('entite_show', { 'id': entite.id }) }}">
+                                            <i class="ace-icon fa fa-search-plus bigger-130"></i>
+                                        </a>
+                                    {% endif %}
+                                    {% if is_granted('ROLE_ENTITE_M') %}
+                                        <a class="green" href="{{ path('entite_edit', { 'id': entite.id }) }}">
+                                            <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                                <div class="hidden-md hidden-lg">
+                                    <div class="inline pos-rel">
+                                        <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                            <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">           
+                                            {% if is_granted('ROLE_ENTITE_V') %}      
+                                                <li>
+                                                    <a href="{{ path('entite_show', { 'id': entite.id }) }}" class="tooltip-info" data-rel="tooltip"  title="Voir entite">
+                                                        <span class="blue">
+                                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                        </span>   
+                                                    </a>
+                                                </li>           
+                                            {% endif %}
+                                            {% if is_granted('ROLE_ENTITE_M') %}
+                                                <li>
+                                                    <a href="{{ path('entite_edit', { 'id': entite.id }) }}" class="tooltip-success" data-rel="tooltip"  title="Modifier entite">
+                                                        <span class="green">
+                                                            <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>          
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+
+
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                    {% if is_granted('ROLE_ENTITE_A') %}
+                        <a  href="#modal-sous_entite"  role="button" class="btn btn-primary" data-toggle="modal" title="ajouter sous entité">
+                            <i class="ace-icon fa fa-plus bigger-110"></i> 
+                            Ajouter
+                        </a>     
+                    {% endif %}
+                    {% if is_granted('ROLE_ENTITE_S') %}
+                        <button class="btn btn-danger tooltip-error" data-rel="tooltip" data-placement="top"   title="Supprimer la selection de entite"><i class="fa fa-trash"></i> Supprimer selection</button>
+                    {% endif %}
+                </div>
+            </div>
+        </form>
+    </div><!-- /.span -->
+    {% if is_granted('ROLE_FOSUSER_L') %}
+        <div class="col-xs-12 col-md-12 clearfix">
+
+            <div class="table-header text-center">
+                Liste des Utilisateurs ayant accés à {{ entite }}
+            </div>
+
+            <table id="dynamic-table" class="table table-striped table-bordered table-hover bg-info">
+                <thead>
+                    <tr>
+
+                        <th>Nom d'utilisateur</th>
+                        <th>Prenom</th>
+                        <th>Nom</th>
+                        <th>Datenaiss</th>
+                        <th>Lieunaiss</th>
+                        <th>Telephone</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+
+                            <td>{{ user.username }}</td>
+
+                            <td>{{ user.prenom }}</td>
+
+                            <td>{{ user.nom }}</td>
+
+                            <td>{{ user.datenaiss }}</td>
+
+                            <td>{{ user.lieunaiss }}</td>
+                            <td>{{ user.telephone }}</td>
+
+                            <td>
+                                <div class="hidden-sm hidden-xs action-buttons">    
+                                    {% if is_granted('ROLE_FOSUSER_V') %}
+                                        <a class="blue" href="{{ path('user_show', { 'id': user.id }) }}">
+                                            <i class="ace-icon fa fa-search-plus bigger-130"></i>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                                <div class="hidden-md hidden-lg">
+                                    <div class="inline pos-rel">
+                                        <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                            <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">                                    <li>
+                                                {% if is_granted('ROLE_FOSUSER_V') %}
+                                                    <a href="{{ path('user_show', { 'id': user.id }) }}" class="tooltip-info" data-rel="tooltip"  title="Voir user">
+                                                        <span class="blue">
+                                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                        </span>   
+                                                    </a>
+                                                {% endif %}
+                                            </li> 
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+    {#    les modals#}
+    {#    modal ajout sous entité#}
+    <div id="modal-sous_entite" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header no-padding">
+                    <div class="table-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <span class="white">&times;</span>
+                        </button>
+                        Ajout d'une sous-entité à {{ entite }}
+                    </div>
+                </div>
+
+                <div class="modal-body no-padding">
+
+                    {% include 'entite/new_from_entite.html.twig' %}
+
+                </div>
+
+                <div class="modal-footer no-margin-top">
+                    <button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">
+                        <i class="ace-icon fa fa-times"></i>
+                        Close
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- PAGE CONTENT ENDS -->
+
+{#    modal ajout sous entité#}
+    <div id="modal-edit_entite" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header no-padding">
+                    <div class="table-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <span class="white">&times;</span>
+                        </button>
+                        Modification ---------- {{ entite }}
+                    </div>
+                </div>
+
+                <div class="modal-body no-padding">
+
+                    {% include 'entite/edit.html.twig' %}
+
+                </div>
+
+                <div class="modal-footer no-margin-top">
+                    <button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">
+                        <i class="ace-icon fa fa-times"></i>
+                        Close
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- PAGE CONTENT ENDS -->
+    
+{% endblock %}

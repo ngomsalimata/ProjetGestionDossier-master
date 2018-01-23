@@ -1,0 +1,61 @@
+<div id="login-box" class="login-box visible widget-box no-border">
+    <div class="widget-body">
+        <div class="widget-main">
+            <h4 class="header red lighter bigger">
+                <i class="ace-icon fa fa-user"></i>
+                Information sur mon compte
+            </h4>
+            <p>
+            <table class="table">
+                <tr>
+                    <th>Prénom</th>
+                    <td>{{ user.prenom }}</td>
+                </tr>
+                <tr>
+                    <th>Nom</th>
+                    <td>{{ user.nom }}</td>
+                </tr>
+                <tr>
+                    <th>Date de Naissance</th>
+                    <td>{{ user.datenaiss }}</td>
+                </tr>
+                <tr>
+                    <th>Lieu de Naissance</th>
+                    <td>{{ user.lieunaiss }}</td>
+                </tr>
+                <tr>
+                    <th>Nom d'utilisateur</th>
+                    <td>{{ user.username }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <th>Téléphone</th>
+                    <td>{{ user.telephone }}</td>
+                </tr>
+            </table>
+            </p>
+            <div class="clearfix">
+                <label class="inline">
+                    <a class="btn btn-sm btn-warning" href="{{ path('fos_user_profile_edit') }}">Modifier
+                    <i class="ace-icon fa fa-edit"></i></a>
+                </label>
+
+                    <a href="{{ path('fos_user_change_password') }}" class="width-60 pull-right btn btn-sm btn-primary">
+                    <i class="ace-icon fa fa-key"></i> Changer mot de passe
+                </a>
+            </div>
+
+        </div><!-- /.widget-main -->
+
+        <div class="toolbar center">
+            <a href="{{ path('homepage') }}" class="back-to-login-link">
+                <span style="color: yellow; font-weight: bold;">
+                    Retour à l'acceuil
+                    <i class="aceicon fa fa-arrow-right"></i></span>
+            </a>
+        </div>
+    </div><!-- /.widget-body -->
+</div><!-- /.forgot-box -->

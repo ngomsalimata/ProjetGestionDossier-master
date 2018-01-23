@@ -1,0 +1,642 @@
+{% extends 'base.html.twig' %}
+
+{% block  breadcrumb %}
+    <li>
+        {% if is_granted('ROLE_FOSUSER_L') %} <a href='{{ path('user_index') }}'>Revenir à la liste</a> {% endif %}
+    </li>
+    <li class="active">Affichage de User</li>
+    {% endblock %}
+
+
+{% block  page_header %}
+    Compte
+    <small>
+        <i class="ace-icon fa fa-angle-double-right"></i>
+        {{ user }}
+    </small>
+{% endblock %}
+
+{% block body %}
+
+
+    <div id="user-profile-2" class="user-profile">
+        <div class="tabbable">
+            <ul class="nav nav-tabs padding-18">
+                <li class="active">
+                    <a data-toggle="tab" href="#profile">
+                        <i class="green ace-icon fa fa-user bigger-120"></i>
+                        Profile
+                    </a>
+                </li>
+
+                <li>
+                    <a data-toggle="tab" href="#notification">
+                        <i class="orange ace-icon fa fa-rss bigger-120"></i>
+                        Notifications
+                    </a>
+                </li>
+
+                <li>
+                    <a data-toggle="tab" href="#entite">
+                        <i class="blue ace-icon fa fa-users bigger-120"></i>
+                        Entités Associées
+                    </a>
+                </li>
+
+                <li>
+                    <a data-toggle="tab" href="#activite">
+                        <i class="pink ace-icon fa fa-picture-o bigger-120"></i>
+                        Activite
+                    </a>
+                </li>
+            </ul>
+
+            <div class="tab-content no-border padding-24">
+                <div id="profile" class="tab-pane in active">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 center">
+                            <span class="profile-picture">
+                                <img class="editable img-responsive" alt="{{user}}" id="avatar2" src="{{ asset('assets/avatars/profile-pic.jpg') }}" />
+                            </span>
+
+                            <div class="space space-4"></div>
+                            {% if is_granted('ROLE_USERENTITE_M')%}
+                                <a  href="#modal-association-entite"  role="button" data-toggle="modal"  class="btn btn-sm btn-block btn-success">
+                                    <i class="ace-icon fa fa-plus-circle bigger-120"></i>
+                                    <span class="bigger-110">Associer entités</span>
+                                </a>
+                            {% endif %}
+                            {% if is_granted('ROLE_FOSUSER_M')%}
+                                <a  href="#modal-modification-compte"  role="button" data-toggle="modal"  class="btn btn-sm btn-block btn-primary">
+                                    <i class="ace-icon fa fa-user bigger-110"></i>
+                                    <span class="bigger-110">modifier profile</span>
+                                </a>
+                            {% endif %}
+                            {% if is_granted('ROLE_FOSUSER_S') %}
+                                <a href="#modal-suppression-compte"  role="button" data-toggle="modal" class="btn btn-sm btn-block btn-danger">
+                                    <i class="ace-icon fa fa-trash-o bigger-110"></i>
+                                    <span class="bigger-110">Supprimer compte</span>
+                                </a>
+                            {% endif %}
+                        </div><!-- /.col -->
+
+                        <div class="col-xs-12 col-sm-9">
+                            <h4 class="blue">
+                                <span class="middle">{{ user }}</span>
+
+                                <span class="label label-purple arrowed-in-right">
+                                    <i class="ace-icon fa fa-circle smaller-80 align-middle"></i>
+                                    {% if user.enabled %} Compte actif {% else %} Compte inactif {% endif %}
+                                </span>
+                            </h4>
+
+                            <div class="profile-user-info">
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> Username </div>
+
+                                    <div class="profile-info-value">
+                                        <span>{{user.username}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> Adresse </div>
+
+                                    <div class="profile-info-value">
+                                        <i class="fa fa-map-marker light-orange bigger-110"></i>
+                                        <span>{{ user.adresse }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> Date Naissance </div>
+
+                                    <div class="profile-info-value">
+                                        <span>{{user.datenaiss}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> Lieu Naissance </div>
+
+                                    <div class="profile-info-value">
+                                        <span>{{ user.lieunaiss }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> Vue à </div>
+
+                                    <div class="profile-info-value">
+                                        <span>{{user.lastLogin|date('H:i:s, d/m/Y')}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="hr hr-8 dotted"></div>
+
+                            <div class="profile-user-info">
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> Email </div>
+
+                                    <div class="profile-info-value">
+                                        <a href="mailto:{{user.email}}" target="_blank">{{user.email}}</a>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name">
+                                        <i class="middle ace-icon fa fa-phone-square bigger-150 blue"></i>
+                                    </div>
+
+                                    <div class="profile-info-value">
+                                        <a href="#">{{ user.telephone }}</a>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name">
+                                        <i class="middle ace-icon fa fa-group bigger-150 light-blue"></i>
+                                    </div>
+
+                                    <div class="profile-info-value">
+                                        {{ user.idgroup }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+
+                    <div class="space-20"></div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="widget-box transparent">
+                                <div class="widget-header widget-header-small">
+                                    <h4 class="widget-title smaller">
+                                        <i class="ace-icon fa fa-check-square-o bigger-110"></i>
+                                        Les entités auxquelles je suis reliées
+                                    </h4>
+                                </div>
+
+                                <div class="widget-body">
+                                    <div class="widget-main">
+                                        <p>
+                                        <table class="table table-striped table-bordered table-hover bg-info">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nom</th>
+
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for entite in userentites %}
+                                                    <tr>
+
+                                                        <td>{{ entite.nom }}</td>
+
+                                                        <td>
+                                                            <div class="hidden-sm hidden-xs action-buttons">                            
+                                                                {% if is_granted('ROLE_ENTITE_V') %}
+                                                                    <a class="blue" href="{{ path('entite_show', { 'id': entite.id }) }}">
+                                                                        <i class="ace-icon fa fa-search-plus bigger-130"></i>
+                                                                    </a>
+                                                                {% endif %}
+                                                                {% if is_granted('ROLE_ENTITE_M') %}
+                                                                    <a class="green" href="{{ path('entite_edit', { 'id': entite.id }) }}">
+                                                                        <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                                                    </a>
+                                                                </div>
+                                                            {% endif %}
+                                                            <div class="hidden-md hidden-lg">
+                                                                <div class="inline pos-rel">
+                                                                    <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                                        <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">                                    
+                                                                        {% if is_granted('ROLE_ENTITE_V') %}
+                                                                            <li>
+                                                                                <a href="{{ path('entite_show', { 'id': entite.id }) }}" class="tooltip-info" data-rel="tooltip"  title="Voir entite">
+                                                                                    <span class="blue">
+                                                                                        <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                                                    </span>   
+                                                                                </a>
+                                                                            </li>   
+                                                                        {% endif %}
+                                                                        {% if is_granted('ROLE_ENTITE_M') %}
+                                                                            <li>
+                                                                                <a href="{{ path('entite_edit', { 'id': entite.id }) }}" class="tooltip-success" data-rel="tooltip"  title="Modifier entite">
+                                                                                    <span class="green">
+                                                                                        <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                                                    </span>
+                                                                                </a>
+                                                                            </li>                            
+                                                                        {% endif %}
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+
+
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="widget-box transparent">
+                                <div class="widget-header widget-header-small header-color-blue2">
+                                    <h4 class="widget-title smaller">
+                                        <i class="ace-icon fa fa-lightbulb-o bigger-120"></i>
+                                        Liste des dossiers sur lesquels je travaille actuellement
+                                    </h4>
+                                </div>
+
+                                <div class="widget-body">
+                                    <div class="widget-main padding-16">
+                                        <div class="clearfix">
+                                            <table class="table table-striped table-bordered table-hover bg-warning">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Libelle</th>
+                                                        <th>Degreimportance</th>
+                                                        <th>Datefintraitementprevu</th>
+
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for dossier in dossier_actuels %}
+                                                        <tr>
+
+
+                                                            <td>{{ dossier.libelle }}</td>
+
+                                                            <td>{{ dossier.degreImportance }}</td>
+                                                            <td>{% if dossier.dateFinTraitementPrevu %}{{ dossier.dateFinTraitementPrevu|date('d/m/Y H:i:s') }}{% endif %}</td>
+
+                                                            <td>
+                                                                <div class="hidden-sm hidden-xs action-buttons">       
+                                                                    {% if is_granted('ROLE_DOSSIER_V') %}
+                                                                        <a class="blue" href="{{ path('dossier_show', { 'id': dossier.id }) }}">
+                                                                            <i class="ace-icon fa fa-search-plus bigger-130"></i>
+                                                                        </a>
+                                                                    {% endif %}
+
+                                                                </div>
+                                                                <div class="hidden-md hidden-lg">
+                                                                    <div class="inline pos-rel">
+                                                                        <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                                            <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                                                        </button>
+                                                                        <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">                                    <li>
+                                                                                {% if is_granted('ROLE_DOSSIER_V') %}
+                                                                                    <a href="{{ path('dossier_show', { 'id': dossier.id }) }}" class="tooltip-info" data-rel="tooltip"  title="Voir dossier">
+                                                                                        <span class="blue">
+                                                                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                                                        </span>   
+                                                                                    </a>
+                                                                                {% endif %}
+                                                                            </li>                       
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+                                        <div class="hr hr-16"></div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /#home -->
+
+                <div id="notification" class="tab-pane">
+                    <div class="profile-feed row">
+
+                        {% for notification in notifications %}
+                            <div class="col-xs-12 col-md-12">
+                                <div class="profile-activity clearfix">
+                                    <div>
+                                        <img class="pull-left" alt="{{user}}" src="{{ asset('assets/avatars/avatar5.png') }}" />
+                                        <a class="user" href=""> {{notification.libelle}} </a>
+                                        <p class="h4 {% if notification.etat %} bg-success {% else %} bg-danger {% endif %} ">{{ notification.contenu }}</p>
+
+                                        <div class="time">
+                                            <i class="ace-icon fa fa-clock-o bigger-110"></i>
+                                            {{ notification.date|date('d/m/Y à H:i:s') }}
+                                        </div>
+                                    </div>
+
+                                    <div class="tools action-buttons">
+                                        <a href="{{ path('notification_edit',{'id':notification.id}) }}" title="{% if notification.etat %} marquer comme non lu {% else %} marquer comme lu {% endif %}" class="blue">
+                                            <i class="ace-icon fa fa-pencil bigger-125"></i>
+                                        </a>
+
+                                        <a href="#" class="red" title="Supprimer">
+                                            <i class="ace-icon fa fa-times bigger-125"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+
+                            </div><!-- /.col -->
+
+
+                        {% endfor %}
+                    </div><!-- /.row -->
+
+                    <div class="space-12"></div>
+
+                    <div class="center">
+                        <button type="button" class="btn btn-sm btn-primary btn-white btn-round">
+                            <i class="ace-icon fa fa-rss bigger-150 middle orange2"></i>
+                            <span class="bigger-110">View more activities</span>
+
+                            <i class="icon-on-right ace-icon fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div><!-- /#feed -->
+
+                <div id="entite" class="tab-pane">
+                    <div class="profile-users clearfix">
+                        {% for entite in mes_entites %}
+                            <div class="itemdiv memberdiv col-md-2 col-sm-4">
+                                <div class="inline pos-rel">
+                                    <div class="user">
+                                        <a href="#">
+                                            <i class="fa fa-home fa-3x"></i>
+                                        </a>
+                                    </div>
+
+                                    <div class="body">
+                                        <div class="name">
+                                            <a href="#">
+                                                <span class="user-status status-online"></span>
+                                                {{ entite }}
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="popover">
+                                        <div class="arrow"></div>
+
+                                        <div class="popover-content">
+                                            <div class="bolder">{{ entite.adresse }}</div>
+
+                                            <div class="time">
+                                                <i class="ace-icon fa fa-phone middle bigger-120 orange"></i>
+                                                <span class="green"> {{entite.numeroTelephone1}} </span>
+                                            </div>
+                                            <div class="time">
+                                                <i class="ace-icon fa fa-envelope middle bigger-120 orange"></i>
+                                                <span class="green"> {{ entite.email }} </span>
+                                            </div>
+
+                                            <div class="hr dotted hr-8"></div>
+
+                                            <div class="tools action-buttons">
+                                                <a href="#">
+                                                    <i class="ace-icon fa fa-facebook-square blue bigger-150"></i>
+                                                </a>
+
+                                                <a href="#">
+                                                    <i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
+                                                </a>
+
+                                                <a href="#">
+                                                    <i class="ace-icon fa fa-google-plus-square red bigger-150"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+                    <div class="hr hr10 hr-double"></div>
+
+                    <ul class="pager pull-right">
+                        <li class="previous disabled">
+                            <a href="#">&larr; Prev</a>
+                        </li>
+
+                        <li class="next">
+                            <a href="#">Next &rarr;</a>
+                        </li>
+                    </ul>
+                </div><!-- /#friends -->
+
+                <div id="activite" class="tab-pane">
+                    <div class="profile-feed row">
+                        <div class="col-sm-6">
+                            <div class="profile-activity clearfix">
+                                <div>
+                                    <img class="pull-left" alt="Alex Doe's avatar" src="assets/avatars/avatar5.png" />
+                                    <a class="user" href="#"> Alex Doe </a>
+                                    changed his profile photo.
+                                    <a href="#">Take a look</a>
+
+                                    <div class="time">
+                                        <i class="ace-icon fa fa-clock-o bigger-110"></i>
+                                        an hour ago
+                                    </div>
+                                </div>
+
+                                <div class="tools action-buttons">
+                                    <a href="#" class="blue">
+                                        <i class="ace-icon fa fa-pencil bigger-125"></i>
+                                    </a>
+
+                                    <a href="#" class="red">
+                                        <i class="ace-icon fa fa-times bigger-125"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div><!-- /.col -->
+
+                        <div class="col-sm-6">
+                            <div class="profile-activity clearfix">
+                                <div>
+                                    <i class="pull-left thumbicon fa fa-pencil-square-o btn-pink no-hover"></i>
+                                    <a class="user" href="#"> Alex Doe </a>
+                                    published a new blog post.
+                                    <a href="#">Read now</a>
+
+                                    <div class="time">
+                                        <i class="ace-icon fa fa-clock-o bigger-110"></i>
+                                        11 hours ago
+                                    </div>
+                                </div>
+
+                                <div class="tools action-buttons">
+                                    <a href="#" class="blue">
+                                        <i class="ace-icon fa fa-pencil bigger-125"></i>
+                                    </a>
+
+                                    <a href="#" class="red">
+                                        <i class="ace-icon fa fa-times bigger-125"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+
+                    <div class="space-12"></div>
+
+                    <div class="center">
+                        <button type="button" class="btn btn-sm btn-primary btn-white btn-round">
+                            <i class="ace-icon fa fa-rss bigger-150 middle orange2"></i>
+                            <span class="bigger-110">View more activities</span>
+
+                            <i class="icon-on-right ace-icon fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div><!-- /#pictures -->
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    {#    modal suppression dossier #}
+    <div id="modal-suppression-compte" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header no-padding">
+                    <div class="table-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <span class="white">&times;</span>
+                        </button>
+                        Suppression du Compte
+                    </div>
+                </div>
+
+                <div class="modal-body no-padding">
+                    <div class="col-md-10 col-md-offset-1 h5">
+                        Êtes-vous sûr de vouloir supprimer ce compte ? <br>
+                        Rassurez-vous que la suppression entrainera celle de toutes les informations relatives. <br>
+                        Continuer ?
+                    </div>
+                </div>
+
+                <div class="modal-footer no-margin-top">
+                    <button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">
+                        <i class="ace-icon fa fa-times"></i>
+                        Close
+                    </button>
+                    <div class="pull-right col-sm-3">
+                        {{ form_start(delete_form) }}
+                        <button class="btn btn-sm btn-danger tooltip-error" data-rel="tooltip" data-placement="top"  title="Supprimer dossier">
+                            <i class="ace-icon fa fa-trash bigger-110"></i>
+                            Supprimer
+                        </button>
+                        {{ form_end(delete_form) }}
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- PAGE CONTENT ENDS -->
+
+
+    {#    association entite#}
+    <div id="modal-association-entite" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header no-padding">
+                    <div class="table-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <span class="white">&times;</span>
+                        </button>
+                        Associer Utilisateur/Entités
+                    </div>
+                </div>
+
+                <div class="modal-body no-padding">
+
+                    <form style="" method="post" action="{{ path('userentite_new') }}">
+                        <input hidden="" type="number" value="{{user.id}}" name="userid">
+                        <table class="table table-bordered table-hover table-striped table-responsive bg-info">
+                            {% for entite in mes_entites %}
+                                <tr>
+                                    <th>
+                                        {% if entite in userentites %}
+                                            <input type="checkbox" class="" name="selected[{{entite.id}}]" checked="" >
+                                        {% else %}
+                                            <input type="checkbox" class="" name="selected[{{entite.id}}]"  >
+                                        {% endif %} 
+                                    </th>
+                                    <td>
+                                        {{ entite }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                        <button class="btn btn-md btn-success pull-right"><i class="fa fa-refresh"></i> mettre à jour</button>
+                    </form>
+
+
+                </div>
+
+                <div class="modal-footer no-margin-top">
+                    <button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">
+                        <i class="ace-icon fa fa-times"></i>
+                        Close
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- PAGE CONTENT ENDS -->
+
+
+    {# modal modification compte#}
+    <div id="modal-modification-compte" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header no-padding">
+                    <div class="table-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <span class="white">&times;</span>
+                        </button>
+                        Modifier Compte
+                    </div>
+                </div>
+
+                <div class="modal-body no-padding">
+
+                    {% include 'user/edit.html.twig' %}
+
+                </div>
+
+                <div class="modal-footer no-margin-top">
+                    <button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">
+                        <i class="ace-icon fa fa-times"></i>
+                        Close
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- PAGE CONTENT ENDS -->
+
+
+{% endblock %}

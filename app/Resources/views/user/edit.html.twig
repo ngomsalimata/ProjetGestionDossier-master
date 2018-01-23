@@ -1,0 +1,144 @@
+
+
+{% block body %}
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+
+            {{ form_start(edit_form,{'attr':{'class':'form-horizontal','role':'form','action':path('user_edit',{'id':user.id})}}) }}                                                    <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(edit_form.prenom) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(edit_form.prenom,{'attr':{'id':'form-field-icon-1'}}) }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(edit_form.nom) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(edit_form.nom,{'attr':{'id':'form-field-icon-1'}}) }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(edit_form.datenaiss) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(edit_form.datenaiss,{'attr':{'id':'form-field-icon-1'}}) }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(edit_form.lieunaiss) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(edit_form.lieunaiss,{'attr':{'id':'form-field-icon-1'}}) }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(edit_form.telephone) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(edit_form.telephone,{'attr':{'id':'form-field-icon-1'}}) }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(edit_form.adresse) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(edit_form.adresse,{'attr':{'id':'form-field-icon-1'}}) }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(edit_form.email) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(edit_form.email,{'attr':{'id':'form-field'}}) }}
+                    </span>
+                </div>
+            </div>                        
+            <div class="form-group hidden">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(edit_form.plainPassword) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(edit_form.plainPassword,{'attr':{'id':'form-field','value':user.plainPassword}}) }}
+                    </span>
+                </div>
+            </div>                        
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(edit_form.username) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(edit_form.username,{'attr':{'id':'form-field'}}) }}
+                    </span>
+                </div>
+            </div>                        
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(edit_form.idgroup) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(edit_form.idgroup,{'attr':{'class':'select2'}}) }}
+                    </span>
+                </div>
+            </div>                        
+            <div class="form-group hidden">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(edit_form.entite) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(edit_form.entite,{'attr':{'class':'select2'}}) }}
+                    </span>
+                </div>
+            </div>  
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(edit_form.entite) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        <select id="user_entite" name="user[entite]" class="select2">      
+                            {% for entite in mes_entites %}
+                                <option value="{{ entite.id }}" > {{ entite }} </option>
+                            {% endfor %}
+                        </select>
+                    </span>
+                </div>
+            </div>                        
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Etat Compte</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(edit_form.enabled,{'attr':{'class':''}}) }}
+                    </span>
+                </div>
+            </div>       
+
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                    <button class="btn btn-warning tooltip-warning" data-rel="tooltip" data-placement="top"   title="modifier User">
+                        <i class="ace-icon fa fa-edit bigger-110"></i>
+                        modifier
+                    </button>
+
+                    &nbsp; &nbsp; &nbsp;
+                    <button class="btn" type="reset" data-rel="tooltip" data-placement="top"   title="vider le formulaire de User">
+                        <i class="ace-icon fa fa-undo bigger-110"></i>
+                        vider le formulaire
+                    </button>
+                </div>
+            </div>
+
+            {{ form_end(edit_form) }}
+
+        </div><!-- /.col -->
+    </div><!-- /.row -->           
+
+{% endblock %}

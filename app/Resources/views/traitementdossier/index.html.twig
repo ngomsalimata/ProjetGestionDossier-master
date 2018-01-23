@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block  breadcrumb %}
+    <li class="active">Liste des TraitementDossiers</li>
+    {% endblock %}
+
+{% block  page_header %}
+    Index
+    <small>
+        <i class="ace-icon fa fa-angle-double-right"></i>
+        Liste des TraitementDossiers
+    </small>
+{% endblock %}
+
+
+
+{% block body %}
+
+    <div class="clearfix">
+        <div class="pull-right tableTools-container"></div>
+    </div>
+    <div class="table-header text-center">
+        Liste des TraitementDossiers
+    </div>
+
+    <form method="POST" action="{{ path('traitementdossier_deleteSelection') }}">
+
+        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="center">
+                        <label class="pos-rel">
+                            <input type="checkbox" class="ace ace-switch ace-switch-4"/>
+                            <span class="lbl"></span>
+                        </label>
+                    </th>
+                    <th>Id</th>
+                    <th>Etat</th>
+                    <th>Datedebut</th>
+                    <th>Datefin</th>
+                    <th>Remarques</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for traitementDossier in traitementDossiers %}
+                    <tr>
+                        <td class="center">
+                            <label class="pos-rel">
+                                <input type="checkbox" name="selection[{{traitementDossier.id}}]" class="ace ace-switch ace-switch-4" />
+                                <span class="lbl"></span>
+                            </label>
+                        </td>
+
+                        <td><a href="{{ path('traitementdossier_show', { 'id': traitementDossier.id }) }}">{{ traitementDossier.id }}</a></td>
+
+                        <td>{{ traitementDossier.etat }}</td>
+
+                        <td>{% if traitementDossier.dateDebut %}{{ traitementDossier.dateDebut|date('d/m/Y H:i:s') }}{% endif %}</td>
+
+                        <td>{% if traitementDossier.dateFin %}{{ traitementDossier.dateFin|date('d/m/Y H:i:s') }}{% endif %}</td>
+
+                        <td>{{ traitementDossier.remarques }}</td>
+
+                        <td>
+                            <div class="hidden-sm hidden-xs action-buttons">                            
+                                <a class="blue" href="{{ path('traitementdossier_show', { 'id': traitementDossier.id }) }}">
+                                    <i class="ace-icon fa fa-search-plus bigger-130"></i>
+                                </a>
+                                <a class="green" href="{{ path('traitementdossier_edit', { 'id': traitementDossier.id }) }}">
+                                    <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                </a>
+                            </div>
+                            <div class="hidden-md hidden-lg">
+                                <div class="inline pos-rel">
+                                    <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                        <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">                                    <li>
+                                            <a href="{{ path('traitementdossier_show', { 'id': traitementDossier.id }) }}" class="tooltip-info" data-rel="tooltip"  title="Voir traitementdossier">
+                                                <span class="blue">
+                                                    <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                </span>   
+                                            </a>
+                                        </li>                                    <li>
+                                            <a href="{{ path('traitementdossier_edit', { 'id': traitementDossier.id }) }}" class="tooltip-success" data-rel="tooltip"  title="Modifier traitementdossier">
+                                                <span class="green">
+                                                    <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                </span>
+                                            </a>
+                                        </li>                                </ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+        <div class="clearfix form-actions">
+            <div class="col-md-offset-3 col-md-9">
+                <a class="btn btn-info tooltip-info" data-rel="tooltip" data-placement="top"  type="button" href="{{ path('traitementdossier_new') }}"  title="Ajouter traitementdossier">
+                    <i class="ace-icon fa fa-plus bigger-110"></i> 
+                    Ajouter
+                </a>                    <button class="btn btn-danger tooltip-error" data-rel="tooltip" data-placement="top"   title="Supprimer la selection de traitementdossier"><i class="fa fa-trash"></i> Supprimer selection</button>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+    <div id="login-box" class="login-box visible widget-box no-border">
+        <div class="widget-body">
+            <div class="widget-main">
+                <h4 class="header green lighter bigger">
+                    <i class="ace-icon fa fa-users blue"></i>
+                    Ouverture de compte
+                </h4>
+                {{ form_start(form) }}
+                <fieldset>
+                    <label class="block clearfix">
+                        <span class="block input-icon input-icon-right">
+                            {{ form_widget(form.prenom,{'attr':{'class':'form-control','placeholder':'Prénom','required':'required'}}) }}                              
+                            <i class="ace-icon fa fa-check"></i>
+                        </span>
+                    </label>
+
+                    <label class="block clearfix">
+                        <span class="block input-icon input-icon-right">
+                            {{ form_widget(form.nom,{'attr':{'class':'form-control','placeholder':'Nom','required':'required'}}) }}                              
+                            <i class="ace-icon fa fa-check"></i>
+                        </span>
+                    </label>
+
+                    <label class="block clearfix">
+                        <span class="block input-icon input-icon-right">
+                            {{ form_widget(form.email,{'attr':{'class':'form-control','placeholder':'Email'}}) }}                              
+                            <i class="ace-icon fa fa-envelope"></i>
+                        </span>
+                    </label>
+
+                    <label class="block clearfix">
+                        <span class="block input-icon input-icon-right">
+                            {{ form_widget(form.username,{'attr':{'class':'form-control','placeholder':'Nom Utilisateur'}}) }}                              
+                            <i class="ace-icon fa fa-user"></i>
+                        </span>
+                    </label>
+                    <label class="block clearfix">
+                        <span class="block input-icon input-icon-right">
+                            {{ form_widget(form.plainPassword.first,{'attr':{'class':'form-control','placeholder':'Mot de Passe'}}) }}
+                            <i class="ace-icon fa fa-lock"></i>
+                        </span>
+                    </label>
+
+                    <label class="block clearfix">
+                        <span class="block input-icon input-icon-right">
+                            {{ form_widget(form.plainPassword.second,{'attr':{'class':'form-control','placeholder':'Répeter Mot de Passe'}}) }}
+                            <i class="ace-icon fa fa-retweet"></i>
+                        </span>
+                    </label>
+
+                    <label class="block clearfix">
+                        <span class="block input-icon input-icon-right">
+                            {{ form_widget(form.roles,{'attr':{'class':'form-control'}}) }}
+                            <i class="ace-icon fa fa-key"></i>
+                        </span>
+                    </label>
+
+                    <label class="block">
+                        <input type="checkbox" class="ace ace-switch ace-switch-4" />
+                        <span class="lbl">
+                            &nbsp;&nbsp;&nbsp; J'accepte les 
+                            <a href="#">conditions</a>
+                        </span>
+                    </label>
+
+                    <div class="clearfix">
+                        <button type="reset" class="width-30 pull-left btn btn-sm">
+                            <i class="ace-icon fa fa-refresh"></i>
+                            <span class="bigger-110">Reset</span>
+                        </button>
+
+                        <button class="width-65 pull-right btn btn-sm btn-success">
+                            <span class="bigger-110">S'inscrire</span>
+                            <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+                        </button>
+                    </div>
+                </fieldset>
+                {{ form_end(form) }}
+                {#                </form>#}
+            </div>
+
+            <div class="btn btn-sm btn-success col-sm-12">
+                <a href="{{ path('fos_user_security_login') }}" class="back-to-login-link">
+                    <span style="color: yellow; font-weight: bold;"> 
+                    <i class="ace-icon fa fa-arrow-left"></i>
+                        Retour à la page de connexion </span>
+                </a>
+            </div>
+        </div><!-- /.widget-body -->
+    </div><!-- /.signup-box -->
+
+{% endblock fos_user_content %}

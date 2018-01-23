@@ -1,0 +1,124 @@
+{% extends 'base.html.twig' %}
+
+{% block  breadcrumb %}
+    <li class="active">Liste des Dossiers</li>
+    {% endblock %}
+
+{% block  page_header %}
+    Index
+    <small>
+        <i class="ace-icon fa fa-angle-double-right"></i>
+        Liste des Dossiers
+    </small>
+{% endblock %}
+
+
+
+{% block body %}
+
+    <div class="clearfix">
+        <div class="pull-right tableTools-container"></div>
+    </div>
+    <div class="table-header text-center">
+        Liste des Dossiers
+    </div>
+
+    <form method="POST" action="{{ path('dossier_deleteSelection') }}">
+
+        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="center">
+                        <label class="pos-rel">
+                            <input type="checkbox" class="ace ace-switch ace-switch-4"/>
+                            <span class="lbl"></span>
+                        </label>
+                    </th>
+
+                    <th>Importance</th>
+                    <th>Libelle</th>
+                    <th>Degreimportance</th>
+                    <th>Etat Actuel</th>
+                    <th>Datefintraitementprevu</th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dossier in dossiers %}
+                    <tr>
+                        <td class="center">
+                            <label class="pos-rel">
+                                <input type="checkbox" name="selection[{{dossier.id}}]" class="ace ace-switch ace-switch-4" />
+                                <span class="lbl"></span>
+                            </label>
+                        </td>
+
+                        <td>{{ dossier.degreImportance }}</td>
+
+                        <td>{{ dossier.libelle }}</td>
+
+                        <td>{{ dossier.degreImportance }}</td>
+
+                        <td> 
+                            {% if dossier.etat=='En Cours' %}
+                                <span class="label label-warning">{{ dossier.etat }}</span>
+                            {% elseif dossier.etat=='Suspendu' %}
+                                <span class="label label-danger">{{ dossier.etat }}</span>
+                            {% else %} 
+                                <span class="label label-success">{{ dossier.etat }}</span>
+                            {% endif %}
+                        </td>
+
+                        <td>{% if dossier.dateFinTraitementPrevu %}{{ dossier.dateFinTraitementPrevu|date('d/m/Y H:i:s') }}{% endif %}</td>
+
+                        <td>
+                            <div class="hidden-sm hidden-xs action-buttons"> 
+                                {% if is_granted('ROLE_DOSSIER_V') %}
+                                    <a class="blue" href="{{ path('dossier_show', { 'id': dossier.id }) }}">
+                                        <i class="ace-icon fa fa-search-plus bigger-130"></i>
+                                    </a>
+                                {% endif %}
+                            </div>
+                            <div class="hidden-md hidden-lg">
+                                <div class="inline pos-rel">
+                                    <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                        <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">                               
+                                        {% if is_granted('ROLE_DOSSIER_V') %}
+                                            <li>
+                                                <a href="{{ path('dossier_show', { 'id': dossier.id }) }}" class="tooltip-info" data-rel="tooltip"  title="Voir dossier">
+                                                    <span class="blue">
+                                                        <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                    </span>   
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+        <div class="clearfix form-actions">
+            <div class="col-md-offset-3 col-md-9">
+                {% if is_granted('ROLE_DOSSIER_A') %}
+                    <a class="btn btn-info tooltip-info" data-rel="tooltip" data-placement="top"  type="button" href="{{ path('dossier_new') }}"  title="Ajouter dossier">
+                        <i class="ace-icon fa fa-plus bigger-110"></i> 
+                        Ajouter
+                    </a>   
+                {% endif %}
+                {% if is_granted('ROLE_DOSSIER_S') %}
+                    <button class="btn btn-danger tooltip-error" data-rel="tooltip" data-placement="top"   title="Supprimer la selection de dossier"><i class="fa fa-trash"></i> Supprimer selection</button>
+                {% endif %}
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,49 @@
+    {% extends 'base.html.twig' %}
+
+    {% block  breadcrumb %}
+    <li>
+        <a href='{{ path('userentite_index') }}'>Revenir à la liste</a>
+    </li>
+    <li class="active">Formulaire de UserEntite</li>
+        {% endblock %}
+
+    {% block  page_header %}
+    Formulaire
+    <small>
+        <i class="ace-icon fa fa-angle-double-right"></i>
+        Création de UserEntite
+    </small>
+    {% endblock %}
+
+
+
+    {% block body %}
+    <div class="row">
+        <div class="col-xs-12">
+
+            {{ form_start(form,{'attr':{'class':'form-horizontal','role':'form'}}) }}                        
+                <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button class="btn btn-info tooltip-info" data-rel="tooltip" data-placement="top"   title="enregistrer UserEntite">
+                            <i class="ace-icon fa fa-check bigger-110"></i>
+                            enregistrer
+                        </button>
+
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn" data-rel="tooltip" data-placement="top"  type="reset"  title="Vider le formulaire de UserEntite" >
+                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                            vider le formulaire
+                        </button>
+                    </div>
+                </div>
+
+                {{ form_end(form) }}
+
+            </div><!-- /.col -->
+        </div><!-- /.row -->           
+
+                <div class="clearfix form-actions">
+    <div class="col-md-offset-3 col-md-9">
+    </div>
+</div>{% endblock %}
+        

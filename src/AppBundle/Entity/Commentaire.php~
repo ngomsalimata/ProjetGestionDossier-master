@@ -1,0 +1,66 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Commentaire
+ *
+ * @ORM\Table(name="commentaire", indexes={@ORM\Index(name="fk_dossier_has_User_User1", columns={"User_id"}), @ORM\Index(name="fk_dossier_has_User_dossier1", columns={"dossier_id"})})
+ * @ORM\Entity
+ */
+class Commentaire
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contenu", type="text", length=65535, nullable=false)
+     */
+    private $contenu;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="datetime", nullable=true)
+     */
+    private $date;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="piece_jointe", type="blob", length=65535, nullable=true)
+     */
+    private $pieceJointe;
+
+    /**
+     * @var \Dossier
+     *
+     * @ORM\ManyToOne(targetEntity="Dossier")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="dossier_id", referencedColumnName="id")
+     * })
+     */
+    private $dossier;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="User_id", referencedColumnName="id")
+     * })
+     */
+    private $user;
+
+
+}

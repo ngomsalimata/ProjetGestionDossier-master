@@ -1,0 +1,91 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>
+        Les droits d'accés aux ressources de l'application
+        <small></small>
+    </h1>
+    <form id="ajoutGroupe" action="{{ path('fosgroup_create') }}" method="POST">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-header with-border">
+                    <div class="box-body">
+                        <div class="col-md-6">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label>Nom du groupe</label><br/>
+                                    <input type="text" name="nom" class="form-control col-md-6" ng-model='data' autofocus required />
+                                    {% verbatim %} {{ data}} {% endverbatim %}<br><br><br>
+                                    {% if error is defined %}<ul><li>{{ error }}</li></span>{% endif %}
+                                </div>                                                                              
+                            </div>
+                        </div><br />
+                        <div class="col-xs-12 col-md-12">
+                            <div class="box box-primary" style=" overflow:auto">
+                                <table class="table table-striped table-bordered table-condensed table-responsive bg-info" id="simple-table">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Droits d'accés</th>
+                                            <th title="Créer">Ajouter</th>
+                                            <th title="Lister">Liste</th>
+                                            <th title="Visualiser">Voir</th>
+                                            <th title="Modifier">modifier</th>
+                                            <th title="Supprimer">Supprimer</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for droit in droits %}
+                                            {% set value = 'ROLE_'~droit|upper %}
+                                            <tr>
+                                                <td><input type="checkbox" id="{{ droit }}" class="acces" onclick="selectGroup('{{ droit }}')" /></td>
+                                                <td>{% if droit == "Fosuser" %}Utilisateur{% elseif droit == "Fosgroup" %}Groupe d'Utilisateur{% else %}{{ droit }}{% endif %}</td>
+                                                <td><input name="roles[]" type="checkbox" class="{{ 'acces '~droit }}" value="{{ value~'_A' }}" /></td>
+                                                <td><input name="roles[]" type="checkbox" class="{{ 'acces '~droit }}" value="{{ value~'_L' }}" /></td>
+                                                <td><input name="roles[]" type="checkbox" class="{{ 'acces '~droit }}" value="{{ value~'_V' }}" /></td>
+                                                <td><input name="roles[]" type="checkbox" class="{{ 'acces '~droit }}" value="{{ value~'_M' }}" /></td>
+                                                <td><input name="roles[]" type="checkbox" class="{{ 'acces '~droit }}" value="{{ value~'_S' }}" /></td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="box-footer">
+                                <div style="float: left">
+                                    <a class="btn btn-default" href="{{ path('fosgroup') }}" title="Retour à la liste">
+                                        <i class="fa fa-reply"></i> Retour
+                                    </a>&nbsp;
+                                    <button type="submit" name="ajoutGroupe" class="btn btn-success"><i class="fa fa-save"></i> Enregistrer</button>                       
+                                </div>                                                                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script>
+
+//Debut Traitement FosGroup
+        function selectGroup(id) {
+            var parent = "#" + id;
+            var label = "#" + id;
+            var labelClass = "." + id;
+            var droit = "." + id;
+
+            $(parent).change(function () {
+                $(labelClass).prop('checked', $(this).prop("checked"));
+            });
+
+            $(label).change(function () {
+                $(droit).prop('checked', $(this).prop("checked"));
+            });
+        }
+//Fin Traitement FosGroup
+
+    </script>
+{% endblock %}

@@ -1,0 +1,44 @@
+<div id="login-box" class="login-box visible widget-box no-border">
+    <div class="widget-body">
+        <div class="widget-main">
+            <h4 class="header red lighter bigger">
+                <i class="ace-icon fa fa-key"></i>
+                Retrouver mot de passe
+            </h4>
+
+            <div class="space-6"></div>
+            <p>
+                Entrer votre login puis recevoir un mail
+            </p>
+
+            <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+                <fieldset>
+                    {% if invalid_username is defined %}
+                        <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</p>
+                    {% endif %}
+                    <label class="block clearfix">
+                        <span class="block input-icon input-icon-right">
+                            <input type="username" id="username" name="username" class="form-control" placeholder="Nom d'utilisateur" />
+                            <i class="ace-icon fa fa-envelope"></i>
+                        </span>
+                    </label>
+
+                    <div class="clearfix">
+                        <button class="width-35 pull-right btn btn-sm btn-danger">
+                            <i class="ace-icon fa fa-lightbulb-o"></i>
+                            <span class="bigger-110">Envoie moi !</span>
+                        </button>
+                    </div>
+                </fieldset>
+            </form>
+        </div><!-- /.widget-main -->
+
+        <div class="toolbar center">
+            <a href="{{ path('fos_user_security_login') }}" class="back-to-login-link">
+                <span style="color: yellow; font-weight: bold;">
+                    Retour à la page de connexion
+                <i class="aceicon fa fa-arrow-right"></i></span>
+            </a>
+        </div>
+    </div><!-- /.widget-body -->
+</div><!-- /.forgot-box -->

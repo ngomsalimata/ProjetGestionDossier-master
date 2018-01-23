@@ -1,0 +1,103 @@
+
+{% block body %}
+    <div class="row">
+        <div class="col-xs-12">
+
+            {{ form_start(edit_form,{'attr':{'class':'form-horizontal','role':'form','action':path('entite_edit',{'id':entite.id})}}) }}                                                    <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(edit_form.nom) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(edit_form.nom,{'attr':{'id':'form-field-icon-1'}}) }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(edit_form.sigle) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(edit_form.sigle,{'attr':{'id':'form-field-icon-1'}}) }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(edit_form.adresse) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(edit_form.adresse,{'attr':{'id':'form-field-icon-1'}}) }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(edit_form.numeroTelephone1) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(edit_form.numeroTelephone1,{'attr':{'id':'form-field-icon-1'}}) }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(edit_form.numeroTelephone2) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(edit_form.numeroTelephone2,{'attr':{'id':'form-field-icon-1'}}) }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(edit_form.email) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(edit_form.email,{'attr':{'id':'form-field-icon-1'}}) }}
+                    </span>
+                </div>
+            </div>
+            <div class="form-group hidden">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(edit_form.entite) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        {{ form_widget(edit_form.entite,{'attr':{'class':'select2'}}) }}
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">{{ form_label(edit_form.entite) }}</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        <select id="entite_entite" name="entite[entite]" class="select2">
+                            <option value="" disabled="">Selectionner l'entité parente</option> 
+                            {% for entite in mes_entites %}
+                                <option value="{{entite.id}}">{{ entite }}</option> 
+                            {% endfor %}
+                        </select>
+                    </span>
+                </div>
+            </div>                        
+
+
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                    <button class="btn btn-warning tooltip-warning" data-rel="tooltip" data-placement="top"   title="modifier Entite">
+                        <i class="ace-icon fa fa-edit bigger-110"></i>
+                        modifier
+                    </button>
+
+                    &nbsp; &nbsp; &nbsp;
+                    <button class="btn" type="reset" data-rel="tooltip" data-placement="top"   title="vider le formulaire de Entite">
+                        <i class="ace-icon fa fa-undo bigger-110"></i>
+                        vider le formulaire
+                    </button>
+                </div>
+            </div>
+
+            {{ form_end(edit_form) }}
+
+        </div><!-- /.col -->
+    </div><!-- /.row -->           
+
+
+{% endblock %}

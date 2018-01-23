@@ -1,0 +1,25 @@
+<div class="clearfix form-actions">
+    <div class="col-md-offset-3 col-md-9">
+
+        {%- if ('edit' in actions) and (not hide_edit) %}
+
+        &nbsp; &nbsp; &nbsp;
+        <a class="btn btn-warning tooltip-warning" data-rel="tooltip" data-placement="top"  type="button" href="{{ "{{ path('" ~ route_name_prefix ~ "_edit', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}" title="{{ "Modifier "~route_name_prefix}}">
+            <i class="ace-icon fa fa-edit bigger-110"></i> modifier</a>
+
+        {%- endif %}
+
+        {%- if ('delete' in actions) and (not hide_delete) %}
+
+        <div class="pull-left col-sm-3">
+            {{ '{{ form_start(delete_form) }}' }}
+            <button class="btn btn-danger tooltip-error" data-rel="tooltip" data-placement="top"  title="{{ "Supprimer "~route_name_prefix}}">
+                <i class="ace-icon fa fa-trash bigger-110"></i>
+                Supprimer
+            </button>
+            {{ '{{ form_end(delete_form) }}' }}
+        </div>
+        {%- endif %}
+
+    </div>
+</div>

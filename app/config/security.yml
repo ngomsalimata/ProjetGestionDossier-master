@@ -1,0 +1,146 @@
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+ 
+    role_hierarchy:
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN]
+        ROLE_USER: [ROLE_USER]
+ 
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+ 
+    firewalls:
+        dev:
+            pattern: ^/login$
+            anonymous: true
+        password_reset:
+            pattern: ^/resetting/*
+            anonymous: true
+        register:
+            pattern: ^/register/*
+            anonymous: true
+
+        main:
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                csrf_provider: security.csrf.token_manager
+                default_target_path:  /
+                remember_me:          true
+            remember_me:
+                key:        %secret% 
+                # %secret% est un paramètre de parameters.yml
+                lifetime:   80600
+                path:       /
+
+            logout:       true
+            anonymous:    false
+
+    access_denied_url: /
+
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/_profiler, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/message/*, role: ROLE_USER }
+        
+        - { path: ^/dossier/new$, role: ROLE_DOSSIER_A } 
+        - { path: ^/dossier/$, role: ROLE_DOSSIER_L }
+        - { path: ^/dossier/[0-9]+$, role: ROLE_DOSSIER_V , methods: [GET] }
+        - { path: ^/dossier/[0-9]+/edit$, role: ROLE_DOSSIER_M }
+        - { path: ^/dossier/[0-9]+/del$, role: ROLE_DOSSIER_S }
+        
+        - { path: ^/fosgroup/new$, role: ROLE_FOSGROUP_A } 
+        - { path: ^/fosgroup/$, role: ROLE_FOSGROUP_L }
+        - { path: ^/fosgroup/[0-9]+$, role: ROLE_FOSGROUP_V , methods: [GET] }
+        - { path: ^/fosgroup/[0-9]+/edit$, role: ROLE_FOSGROUP_M }
+        - { path: ^/fosgroup/[0-9]+/del$, role: ROLE_FOSGROUP_S }
+        
+        - { path: ^/user/new$, role: ROLE_FOSUSER_A } 
+        - { path: ^/user/$, role: ROLE_FOSUSER_L }
+        - { path: ^/user/[0-9]+$, role: ROLE_FOSUSER_V , methods: [GET] }
+        - { path: ^/user/[0-9]+/edit$, role: ROLE_FOSUSER_M }
+        - { path: ^/user/[0-9]+/del$, role: ROLE_FOSUSER_S }
+        
+        - { path: ^/commentaire/new$, role: ROLE_COMMENTAIRE_A } 
+        - { path: ^/commentaire/$, role: ROLE_COMMENTAIRE_L }
+        - { path: ^/commentaire/[0-9]+$, role: ROLE_COMMENTAIRE_V , methods: [GET] }
+        - { path: ^/commentaire/[0-9]+/edit$, role: ROLE_COMMENTAIRE_M }
+        - { path: ^/commentaire/[0-9]+/del$, role: ROLE_COMMENTAIRE_S }
+
+        - { path: ^/entite/new$, role: ROLE_ENTITE_A } 
+        - { path: ^/entite/$, role: ROLE_ENTITE_L }
+        - { path: ^/entite/[0-9]+$, role: ROLE_ENTITE_V , methods: [GET] }
+        - { path: ^/entite/[0-9]+/edit$, role: ROLE_ENTITE_M }
+        - { path: ^/entite/[0-9]+/del$, role: ROLE_ENTITE_S }
+
+        - { path: ^/message/new$, role: ROLE_MESSAGE_A } 
+        - { path: ^/message/$, role: ROLE_MESSAGE_L }
+        - { path: ^/message/[0-9]+$, role: ROLE_MESSAGE_V , methods: [GET] }
+        - { path: ^/message/[0-9]+/edit$, role: ROLE_MESSAGE_M }
+        - { path: ^/message/[0-9]+/del$, role: ROLE_MESSAGE_S }
+
+        - { path: ^/notification/new$, role: ROLE_NOTIFICATION_A } 
+        - { path: ^/notification/$, role: ROLE_NOTIFICATION_L }
+        - { path: ^/notification/[0-9]+$, role: ROLE_NOTIFICATION_V , methods: [GET] }
+        - { path: ^/notification/[0-9]+/edit$, role: ROLE_NOTIFICATION_M }
+        - { path: ^/notification/[0-9]+/del$, role: ROLE_NOTIFICATION_S }
+
+        - { path: ^/traitementdossier/new$, role: ROLE_TRAITEMENTDOSSIER_A } 
+        - { path: ^/traitementdossier/$, role: ROLE_TRAITEMENTDOSSIER_L }
+        - { path: ^/traitementdossier/[0-9]+$, role: ROLE_TRAITEMENTDOSSIER_V , methods: [GET] }
+        - { path: ^/traitementdossier/[0-9]+/edit$, role: ROLE_TRAITEMENTDOSSIER_M }
+        - { path: ^/traitementdossier/[0-9]+/del$, role: ROLE_TRAITEMENTDOSSIER_S }
+
+        - { path: ^/userentite/new$, role: ROLE_USERENTITE_A } 
+        - { path: ^/userentite/$, role: ROLE_USERENTITE_L }
+        - { path: ^/userentite/[0-9]+$, role: ROLE_USERENTITE_V , methods: [GET] }
+        - { path: ^/userentite/[0-9]+/edit$, role: ROLE_USERENTITE_M }
+        - { path: ^/userentite/[0-9]+/del$, role: ROLE_USERENTITE_S }
+
+        - { path: ^/piecejointe/new$, role: ROLE_USERENTITE_A } 
+        - { path: ^/piecejointe/$, role: ROLE_PIECEJOINTE_L }
+        - { path: ^/piecejointe/[0-9]+$, role: ROLE_PIECEJOINTE_V , methods: [GET] }
+        - { path: ^/piecejointe/[0-9]+/edit$, role: ROLE_PIECEJOINTE_M }
+        - { path: ^/piecejointe/supprimerpj$, role: ROLE_PIECEJOINTE_S , methods: [POST]  }
+        - { path: ^/piecejointe/deleteSelection$, role: ROLE_PIECEJOINTE_S , methods: [POST]  }
+        - { path: ^/piecejointe/download/[0-9]+$, role: ROLE_PIECEJOINTE_v  }
+        
+
+
+
+
+
+
+
+
+
+
+
+#
+## To get started with security, check out the documentation:
+## http://symfony.com/doc/current/book/security.html
+#security:
+#
+#    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+#    providers:
+#        in_memory:
+#            memory: ~
+#
+#    firewalls:
+#        # disables authentication for assets and the profiler, adapt it according to your needs
+#        dev:
+#            pattern: ^/(_(profiler|wdt)|css|images|js)/
+#            security: false
+#
+#        main:
+#            anonymous: ~
+#            # activate different ways to authenticate
+#
+#            # http_basic: ~
+#            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
+#
+#            # form_login: ~
+#            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html

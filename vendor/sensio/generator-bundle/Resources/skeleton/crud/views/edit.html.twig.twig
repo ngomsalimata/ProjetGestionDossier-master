@@ -1,0 +1,63 @@
+{% block extends %}
+    {{ "{% extends 'base.html.twig' %}" }}
+{% endblock extends %}
+
+{% block body %}
+    {{ "{% block  breadcrumb %}" }}
+    <li>
+        {{ "<a href='{{ path('"~(entity|lower)~"_index') }}'>Revenir à la liste</a>" }}
+    </li>
+    <li class="active">Modification de {{ entity }}</li>
+        {{ "{% endblock %}" }}
+
+    {{ "{% block  page_header %}" }}
+    Formulaire
+    <small>
+        <i class="ace-icon fa fa-angle-double-right"></i>
+        Modification de {{entity}}
+    </small>
+    {{ "{% endblock %}" }}
+
+    {{ "{% block body %}" }}
+    <div class="row">
+        <div class="col-xs-12">
+
+            {{ '{{ form_start(edit_form,{\'attr\':{\'class\':\'form-horizontal\',\'role\':\'form\'}}) }}' }}
+            {%- for field, metadata in fields %}
+            {% if not loop.first %}
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">{{ '{{ form_label(edit_form.'~field~') }}' }}</label>
+                    <div class="col-sm-9">
+                        <span class="input-icon input-icon-right">
+                            {{ '{{ form_widget(edit_form.'~field~',{\'attr\':{\'id\':\'form-field-icon-1\'}}) }}'}}
+                        </span>
+                    </div>
+                </div>
+
+            {% endif %}
+            {% endfor %}
+                <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button class="btn btn-warning tooltip-warning" data-rel="tooltip" data-placement="top"   title="{{ "modifier "~entity}}">
+                            <i class="ace-icon fa fa-edit bigger-110"></i>
+                            modifier
+                        </button>
+
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn" type="reset" data-rel="tooltip" data-placement="top"   title="{{ "vider le formulaire de "~entity}}">
+                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                            vider le formulaire
+                        </button>
+                    </div>
+                </div>
+
+                {{ '{{ form_end(edit_form) }}' }}
+
+            </div><!-- /.col -->
+        </div><!-- /.row -->           
+
+
+        {% set hide_edit, hide_delete = true, false %}
+        {{ include('crud/views/others/record_actions.html.twig.twig') -}}
+        {{ "{% endblock %}" }}
+        {% endblock body %}

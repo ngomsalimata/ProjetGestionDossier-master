@@ -1,0 +1,93 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+    {% if error %}
+        <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
+    {% endif %}
+
+
+    <div id="login-box" class="login-box visible widget-box no-border">
+        <div class="widget-body">
+            <div class="widget-main">
+                <h4 class="header blue lighter bigger">
+                    <i class="ace-icon fa fa-coffee green"></i>
+                    Saisir vos identifiants
+                </h4>
+
+                <div class="space-6"></div>
+
+                <form action="{{ path("fos_user_security_check") }}" method="POST">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                    <fieldset>
+                        <label class="block clearfix">
+                            <span class="block input-icon input-icon-right">
+                                <input type="text" class="form-control" placeholder="Nom d'Utilisateur" type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+                                <i class="ace-icon fa fa-user"></i>
+                            </span>
+                        </label>
+
+                        <label class="block clearfix">
+                            <span class="block input-icon input-icon-right">
+                                <input type="password" class="form-control" placeholder="Mot de passe" id="password" name="_password" required="required"  />
+                                <i class="ace-icon fa fa-lock"></i>
+                            </span>
+                        </label>
+
+                        <div class="space"></div>
+
+                        <div class="clearfix">
+                            <label class="inline">
+                                <input type="checkbox" class="ace ace-switch ace-switch-4" id="remember_me" name="_remember_me" value="on"/>
+                                 <span class="lbl">&nbsp; Se rappeler</span>
+                            </label>
+
+                            <button  id="_submit" name="_submit" class="width-35 pull-right btn btn-sm btn-primary">
+                                <i class="ace-icon fa fa-key"></i> Soumettre
+                                <span class="bigger-110"></span>
+                            </button>
+                        </div>
+
+                        <div class="space-4"></div>
+                    </fieldset>
+                </form>
+
+                <div class="social-or-login center">
+                    <span class="bigger-110">Ou se connecter avec</span>
+                </div>
+
+                <div class="space-6"></div>
+
+                <div class="social-login center">
+                    <a class="btn btn-primary">
+                        <i class="ace-icon fa fa-facebook"></i>
+                    </a>
+
+                    <a class="btn btn-info">
+                        <i class="ace-icon fa fa-twitter"></i>
+                    </a>
+
+                    <a class="btn btn-danger">
+                        <i class="ace-icon fa fa-google-plus"></i>
+                    </a>
+                </div>
+            </div><!-- /.widget-main -->
+
+            <div class="toolbar clearfix">
+                <div>
+                    <a href="{{ path('fos_user_resetting_request') }}" class="forgot-password-link">
+                        <i class="ace-icon fa fa-arrow-left"></i>
+                        Mot de passe oublié ?
+                    </a>
+                </div>
+
+                <div>
+                    <a href="{{ path('fos_user_registration_register') }}" class="user-signup-link">
+                        Créer un compte
+                        <i class="ace-icon fa fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div><!-- /.widget-body -->
+    </div><!-- /.login-box -->
+
+{% endblock fos_user_content %}
