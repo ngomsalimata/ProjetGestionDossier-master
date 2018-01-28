@@ -59,7 +59,7 @@ class PieceJointeController extends Controller {
           $dir_doc = $this->container->getParameter('kernel.root_dir') . '/../web/upload/piecejointe';
          $uploadedfiles->move($dir_doc,$doc);
          $pieceJointe->setFichier($doc);
-        if ($form->isSubmitted() && $form->isValid()) {
+        try {
             $em = $this->getDoctrine()->getManager();
             $pieceJointe->setUser($this->getUser());
             $em->persist($pieceJointe);
@@ -88,12 +88,18 @@ class PieceJointeController extends Controller {
                     ->set('success', 'Ajout effectué avec succés');
 
             return $this->redirectToRoute('dossier_show', array('id' => $pieceJointe->getDossier()->getId()));
-        }
+        }catch (\Doctrine\DBAL\DBALException $e){
+//            return $this->render('piecejointe/new.html.twig', array(
+//                    'pieceJointe' => $pieceJointe,
+//                    'form' => $form->createView(),
+//        ));  $request->getSession()->getFlashBag()
+            $request->getSession()->getFlashBag()
+                    ->set('dangers', 'Ajout piece jointe impossible'); 
 
-        return $this->render('piecejointe/new.html.twig', array(
-                    'pieceJointe' => $pieceJointe,
-                    'form' => $form->createView(),
-        ));
+            return $this->redirectToRoute('dossier_show', array('id' => $pieceJointe->getDossier()->getId()));
+        }
+ 
+        
     }
 
     /**
