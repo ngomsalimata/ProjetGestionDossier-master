@@ -111,13 +111,15 @@ class DossierController extends Controller {
                 ->setParameter(1, $this->getUser())
                 ->getResult();
         $piecejointe= new \AppBundle\Entity\PieceJointe();
+
         $piecejointe->setDossier($dossier);
          $today= new \DateTime();
         
         $piecejointe->setDateAssociation($today);
        
         $piecejointe_form=$this->createForm('AppBundle\Form\PieceJointeType', $piecejointe);
-        $pieceJointe=$em->getRepository('AppBundle:PieceJointe')->findBy(array('dossier'=>$dossier));
+        $pieceJointe=$em->getRepository('AppBundle:PieceJointe')->findBy(array('dossier'=>$dossier->getId()));
+
         return $this->render('dossier/show.html.twig', array(
                     'dossier' => $dossier,
                     'delete_form' => $deleteForm->createView(),
