@@ -41,12 +41,14 @@ class PieceJointeController extends Controller {
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request) {
+         throw $this->createNotFoundException('Ce type de document n\'est pas reconnu');
         $pieceJointe = new PieceJointe();
         $form = $this->createForm('AppBundle\Form\PieceJointeType', $pieceJointe);
         $form->handleRequest($request);
         $dossier = $pieceJointe->getDossier();
          $uploadedfiles=$pieceJointe->getFichier();
          $doc=$pieceJointe->getLibelle().'.'.$uploadedfiles->guessExtension();
+         
          //verification de l'extension du document
           $extension= $uploadedfiles->guessExtension();
           $type=array('xlsx','pdf','docx','pptx','jpeg','jpg','png');
@@ -58,6 +60,7 @@ class PieceJointeController extends Controller {
          //$uploadedfiles=$files->get('pj');
           $dir_doc = $this->container->getParameter('kernel.root_dir') . '/../web/upload/piecejointe';
          $uploadedfiles->move($dir_doc,$doc);
+         
          $pieceJointe->setFichier($doc);
         try {
             $em = $this->getDoctrine()->getManager();
